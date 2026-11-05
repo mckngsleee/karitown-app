@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# AWS CDK
+cdk.out/
+cdk.context.json
+
+# Secrets and editor/OS files
+.env
+.DS_Store
+.vscode/
+.idea/
+
+# Frontend
+node_modules/
+dist/
