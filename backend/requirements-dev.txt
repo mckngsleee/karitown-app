@@ -1,0 +1,7 @@
+-r requirements.txt
+pytest==8.3.4
+httpx==0.28.1
+moto[dynamodb]==5.0.24
+uvicorn==0.34.0
+aws-cdk-lib==2.250.0
+constructs==10.8.1
