@@ -1,0 +1,526 @@
+/* Karitown, light version: the prototype's layout with the Karitown brand.
+ *
+ * Colour split 60-20-15-5:
+ *   60%  #F7F9F8 off-white   backgrounds and panels (--color-bg, --color-surface)
+ *   20%  #103B28 dark green  text, rules, selected buttons (--color-text)
+ *   15%  #92E46B green       main action buttons, active tab, "Open" tag (--color-green)
+ *    5%  #FF7951 orange      warnings only: old prices, full truck, void, errors (--color-orange)
+ * Text on green or orange is always dark green: white would be too faint outdoors.
+ * Font: Open Sans.
+ */
+:root {
+  --color-bg: #f7f9f8;
+  --color-surface: #e8eeea;
+  --color-text: #103b28;
+  --color-divider: color-mix(in srgb, #103b28 35%, transparent);
+  --color-neutral-200: #e1e8e4;
+  --color-neutral-300: #c8d3cd;
+  --color-neutral-500: #8a9b92;
+  --color-neutral-700: #4a6458;
+  --color-neutral-800: #2e4a3c;
+  --color-green: #92e46b;
+  --color-green-dark: #7fd357;
+  --color-green-soft: #e4f6da;
+  --color-orange: #ff7951;
+  --color-orange-soft: #ffe6dd;
+  --font-body: "Open Sans", system-ui, sans-serif;
+  --font-heading: "Open Sans", system-ui, sans-serif;
+  --shadow-md: 0 3px 10px color-mix(in srgb, #103b28 18%, transparent);
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.4;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input,
+select,
+button,
+textarea {
+  font-family: inherit;
+  color: inherit;
+}
+
+input::placeholder {
+  color: var(--color-neutral-500);
+}
+
+button {
+  cursor: pointer;
+  border-radius: 0;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: -3px;
+}
+
+@keyframes kspin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- App frame ---------- */
+
+.app {
+  height: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.header {
+  min-height: 58px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: env(safe-area-inset-top, 0px) 8px 0 4px;
+  border-bottom: 2px solid var(--color-divider);
+}
+
+.main {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+.tabbar {
+  flex: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: 2px solid var(--color-divider);
+  background: var(--color-bg);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.tabbar button {
+  min-height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: transparent;
+  border: 0;
+  border-top: 4px solid transparent;
+  margin-top: -2px;
+  color: var(--color-neutral-700);
+  font-weight: 600;
+}
+
+.tabbar button[aria-current="page"] {
+  border-top-color: var(--color-green);
+  color: var(--color-text);
+  font-weight: 800;
+}
+
+.footer {
+  flex: none;
+  padding: 10px 16px;
+  border-top: 2px solid var(--color-text);
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ---------- Buttons ---------- */
+
+/* Main action: green with dark green text. */
+.btn-main {
+  background: var(--color-green);
+  color: var(--color-text);
+  border: 0;
+  text-align: left;
+}
+
+.btn-main:hover:not(:disabled) {
+  background: var(--color-green-dark);
+}
+
+.btn-main:disabled {
+  background: var(--color-neutral-300);
+  color: var(--color-neutral-700);
+}
+
+/* Secondary action: outlined. */
+.btn-line {
+  width: 100%;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  background: transparent;
+  border: 2px solid var(--color-text);
+  font: 800 16px var(--font-heading);
+  text-align: left;
+}
+
+/* Remove / void: outlined in orange. */
+.btn-warn {
+  background: transparent;
+  border: 2px solid var(--color-orange);
+  color: var(--color-text);
+  font-weight: 800;
+  text-align: left;
+}
+
+.link {
+  background: transparent;
+  border: 0;
+  color: var(--color-text);
+  font-weight: 700;
+  font-size: 14px;
+  min-height: 40px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Segmented buttons that touch each other (Today | Week | Month | Custom). */
+.seg {
+  display: grid;
+  padding-left: 2px;
+}
+
+.seg > button {
+  min-height: 44px;
+  border: 2px solid var(--color-text);
+  margin-left: -2px;
+  background: transparent;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* Any button that can be selected: dark green when on. */
+[aria-pressed="true"] {
+  background: var(--color-text) !important;
+  color: var(--color-bg) !important;
+}
+
+.chip {
+  flex: none;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 2px solid var(--color-text);
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 60px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--color-divider);
+  text-align: left;
+}
+
+button.row:active,
+.press:active {
+  background: var(--color-neutral-200);
+}
+
+.icon-box {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-neutral-200);
+}
+
+/* ---------- Text ---------- */
+
+.col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.grow {
+  flex: 1;
+}
+
+.muted {
+  color: var(--color-neutral-700);
+}
+
+.sub {
+  font-size: 13px;
+  color: var(--color-neutral-700);
+}
+
+.tl {
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--color-neutral-700);
+}
+
+.label {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.caps {
+  font: 800 13px var(--font-heading);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sec-head {
+  padding: 16px 16px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.rule-b {
+  border-bottom: 2px solid var(--color-divider);
+}
+
+.kv {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--color-divider);
+  font-size: 14px;
+}
+
+.kv > :first-child {
+  color: var(--color-neutral-700);
+}
+
+.kv > :last-child {
+  font-weight: 600;
+  text-align: right;
+}
+
+/* ---------- Tags and notices ---------- */
+
+.tag {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.tag-warn {
+  background: var(--color-orange);
+  color: var(--color-text);
+}
+
+.tag-dark {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.tag-grey {
+  background: var(--color-neutral-200);
+  color: var(--color-neutral-800);
+}
+
+.tag-green {
+  background: var(--color-green);
+  color: var(--color-text);
+}
+
+.notice {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  background: var(--color-orange-soft);
+  border-left: 6px solid var(--color-orange);
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.notice svg,
+.err svg {
+  color: var(--color-orange);
+}
+
+.notice-strong {
+  background: var(--color-orange);
+}
+
+.notice-strong svg {
+  color: var(--color-text);
+}
+
+.err {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.panel {
+  background: var(--color-surface);
+}
+
+/* ---------- Inputs ---------- */
+
+.box {
+  display: flex;
+  min-width: 0;
+  border: 2px solid var(--color-text);
+  background: var(--color-surface);
+}
+
+.box input {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  padding: 6px 10px;
+}
+
+.box:focus-within {
+  outline: 3px solid var(--color-text);
+  outline-offset: 0;
+}
+
+.box input:focus-visible {
+  outline: none;
+}
+
+.box .unit {
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
+  font-weight: 600;
+  color: var(--color-neutral-700);
+}
+
+.box .cur {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  font: 800 22px var(--font-heading);
+}
+
+.text-input {
+  min-height: 52px;
+  border: 2px solid var(--color-text);
+  background: var(--color-surface);
+  padding: 0 10px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+/* ---------- Progress ---------- */
+
+.bar {
+  position: relative;
+  background: var(--color-neutral-200);
+}
+
+.bar > span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: var(--color-text);
+}
+
+.bar[data-warn="true"] > span {
+  background: var(--color-orange);
+}
+
+/* ---------- Toast and sheet ---------- */
+
+.toast {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 96px;
+  padding: 12px 14px;
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  box-shadow: var(--shadow-md);
+  z-index: 5;
+}
+
+.toast svg {
+  color: var(--color-green);
+}
+
+.sheet-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: rgba(16, 59, 40, 0.55);
+}
+
+.sheet {
+  background: var(--color-bg);
+  border-top: 4px solid var(--color-text);
+  padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 80%;
+  overflow-y: auto;
+}
