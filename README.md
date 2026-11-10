@@ -1,16 +1,12 @@
 # Karitown
 
-**Kariton Rolling Into Town.** An app for junkshop owners in the Philippines. They buy scrap by weight, fill a truck load, sell it to a buyer, and see how much money went out, came in and was earned per load.
+**Kariton Rolling Into Town.** An offline-first app for junkshop owners in the Philippines. Owners buy scrap by weight, fill a truck load, sell it to a buyer, and see the money that went out, came in, and was earned on
+each load.
 
 The backend runs on AWS with **API Gateway, Lambda and DynamoDB**, and the infrastructure is written in Python with the **AWS CDK**.
 
-```mermaid
-flowchart LR
-  Phone["Karitown app<br/>(owner's phone)"] -- "HTTPS + x-api-key" --> APIGW["Amazon API Gateway<br/>HTTP API"]
-  APIGW --> Lambda["AWS Lambda<br/>Python 3.12 · FastAPI"]
-  Lambda -- "read / write" --> DDB[("Amazon DynamoDB")]
-  Lambda -. logs .-> CW["Amazon CloudWatch Logs"]
-```
+> **Project status:** The app is complete and runs on a local machine, with a local copy of DynamoDB.
+> The architecture below reflects a planned state defined via AWS CDK (backend/infra/stack.py) and is not yet provisioned on AWS.
 
 ## What's in this repository
 
@@ -42,7 +38,3 @@ Deploying to AWS: see [backend/README.md](backend/README.md#deploy-to-aws).
 - [Brand guide](docs/design/brand.md): logo, colours, typography
 - [Frontend guide](frontend/README.md): folder map and how to run the app
 - [Backend guide](backend/README.md): folder map, endpoints, running locally, deploying
-
-## Screenshots
-
-_Add after deploying: the API's `/docs` page and the CloudFormation stack, saved in `docs/screenshots/`._
