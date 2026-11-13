@@ -14,7 +14,7 @@ The backend runs on AWS with **API Gateway, Lambda and DynamoDB**, and the infra
 |---|---|---|
 | [`backend/`](backend/) | The API and business rules (Python, FastAPI) plus its AWS setup (CDK) | Working, 26 tests |
 | [`frontend/`](frontend/) | The phone app: offline-first PWA (React, TypeScript, Vite) | Working: all screens, offline-first |
-| [`docs/`](docs/) | Business rules, architecture notes, screenshots | |
+| [`docs/`](docs/) | Design assets, business process (BPMN), rules, and architecture notes | |
 | [`.github/workflows/`](.github/workflows/) | Runs backend tests and the frontend build on every push | |
 
 ## Quick start
