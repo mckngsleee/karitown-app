@@ -33,8 +33,8 @@ Deploying to AWS: see [backend/README.md](backend/README.md#deploy-to-aws).
 
 ## Documentation
 
-- [Architecture and AWS choices](docs/architecture.md)
+- [Architecture](docs/architecture.md)
+- [Business process](docs/process.md): how the junkshop works before and with Karitown (BPMN diagrams)
 - [Business rules](docs/business-rules.md): how weights, prices, loads and sales work
-- [Brand guide](docs/design/brand.md): logo, colours, typography
 - [Frontend guide](frontend/README.md): folder map and how to run the app
 - [Backend guide](backend/README.md): folder map, endpoints, running locally, deploying
