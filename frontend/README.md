@@ -1,6 +1,6 @@
 # Karitown frontend
 
-The phone app: an offline-first **PWA** (a web app you can install on the home screen). Built with Vite, React and TypeScript, styled with the Karitown brand ([docs/design/brand.md](../docs/design/brand.md)).
+The phone app: an offline-first **PWA** (a web app you can install on the home screen). Built with Vite, React and TypeScript.
 
 ## Folder map
 
