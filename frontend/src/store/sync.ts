@@ -36,7 +36,10 @@ export async function checkServer() {
   let up = false;
   if (navigator.onLine) {
     try {
-      up = (await fetch(API_URL + "/health", { signal: AbortSignal.timeout(5000) })).ok;
+        up = (await fetch(API_URL + "/health", {
+        headers: API_KEY ? { "x-api-key": API_KEY } : {},
+        signal: AbortSignal.timeout(5000),
+      })).ok;
     } catch {
       up = false;
     }
